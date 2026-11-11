@@ -51,16 +51,17 @@ void mostrarLibros(int *id, char titulos[][100],
     }
 }
 
-void buscarLibro(int *id, char titulos[][100], 
+int buscarLibro(int *id, char titulos[][100], 
                     char autores[][50], int *anio, int *estado, int contL){
 
     printf("Seleccione el metodo de busqueda 1.ID/2.Titulo: ");
     int opc = validarFloatRango(1,2);
+    int iden;
     switch (opc)
     {
     case 1:
         printf("Ingrese un numero del 0-%d: ",contL-1);
-        int iden = validarFloatRango(0,contL-1);
+        iden = validarFloatRango(0,contL-1);
         mostrarLibros(id,titulos,autores,anio,estado,iden,iden+1);
         break;
     case 2:
@@ -71,11 +72,40 @@ void buscarLibro(int *id, char titulos[][100],
         {
             if(strcasecmp(titulo,titulos[i])==0){
                 mostrarLibros(id,titulos,autores,anio,estado,i,i+1);
+                iden = i;
+                break;
             }
         }
         break;
     default:
         break;
     }
+    return iden;
 
+}
+
+void cambiarEstado(int *id, char titulos[][100], 
+                    char autores[][50], int *anio, int *estado, int contL){
+    printf("Seleccione 1.Prestar/2.Devolver: ");
+    int opc = validarFloatRango(1,2);
+    int posicion = buscarLibro(id,titulos,autores,anio,estado,contL);
+    switch (opc)
+    {
+    case 1:
+        if (estado[posicion] == 0){
+            estado[posicion] = 1;
+        }else{
+            printf("Error: el libro ya esta prestado\n");
+        }
+        break;
+    case 2:
+     if (estado[posicion] == 1){
+            estado[posicion] = 0;
+        }else{
+            printf("Error: el libro no esta prestado\n");
+        }
+        break;
+    default:
+        break;
+    }
 }

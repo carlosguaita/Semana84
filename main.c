@@ -31,6 +31,9 @@ int main (int argc, char *argv[]) {
         case 3:
             buscarLibro(id,titulos,autores,anio,estado,contL);
             break;
+        case 4:
+            cambiarEstado(id,titulos,autores,anio,estado,contL);
+            break;
         default:
             break;
         }
